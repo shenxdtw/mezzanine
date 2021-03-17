@@ -3,7 +3,12 @@ import {
   messageIcons,
   MessageSeverity,
 } from '@mezzanine-ui/core/message';
-import { FC, Key } from 'react';
+import {
+  FC,
+  Key,
+  useEffect,
+  useState,
+} from 'react';
 import { cx } from '../utils/cx';
 import Icon from '../Icon';
 import {
@@ -11,6 +16,12 @@ import {
   Notifier,
   NotifierData,
 } from '../Notifier';
+import { SlideFade, SlideFadeProps } from '../Transition';
+import { NotifierConfig } from '../Notifier/typings';
+
+export interface MessageConfigProps extends NotifierConfig {
+  transitionProps?: Omit<SlideFadeProps, 'children' | 'in' | 'appear'>
+}
 
 export interface MessageData extends NotifierData {
   /**
@@ -20,16 +31,24 @@ export interface MessageData extends NotifierData {
    */
   duration?: NotifierData['duration'];
   /**
+   * The key of message.
+   */
+  reference?: Key;
+  /**
    * The severity of the message.
    * @default info
    */
   severity?: MessageSeverity;
+  /**
+   * Fade In transition props. Defaults equal with `Fade` component.
+   */
+  transitionProps?: Omit<SlideFadeProps, 'children' | 'in' | 'appear'>
 }
 
 export interface Message
   extends
   FC<MessageData>,
-  Notifier<MessageData>,
+  Notifier<MessageData, MessageConfigProps>,
   Record<
   MessageSeverity,
   (
@@ -49,25 +68,62 @@ export interface Message
 const Message: Message = ((props) => {
   const {
     children,
+    duration,
+    reference,
     severity = 'info',
+    transitionProps,
   } = props;
+
+  const {
+    onExited: onExitedProp,
+    ...restTransitionProps
+  } = transitionProps || {};
+
   const icon = messageIcons[severity];
 
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if (open && duration) {
+      const timer = window.setTimeout(() => {
+        setOpen(false);
+      }, duration);
+
+      return () => {
+        window.clearTimeout(timer);
+      };
+    }
+  }, [open, duration]);
+
   return (
-    <div
-      className={cx(
-        classes.host,
-        classes.severity(severity),
-      )}
+    <SlideFade
+      in={open}
+      appear
+      onExited={(node) => {
+        if (onExitedProp) {
+          onExitedProp(node);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        Message.remove(reference!);
+      }}
+      {...restTransitionProps}
     >
-      <Icon
-        className={classes.icon}
-        icon={icon}
-      />
-      <span className={classes.content}>
-        {children}
-      </span>
-    </div>
+      <div
+        className={cx(
+          classes.host,
+          classes.severity(severity),
+        )}
+      >
+        <Icon
+          className={classes.icon}
+          icon={icon}
+        />
+        <span className={classes.content}>
+          {children}
+        </span>
+      </div>
+    </SlideFade>
   );
 }) as Message;
 
@@ -76,11 +132,13 @@ const {
   config,
   destroy,
   remove,
-} = createNotifier<MessageData>({
-  duration: 3000,
+} = createNotifier<MessageData, MessageConfigProps>({
   render: (message) => <Message {...message} />,
   setRoot: (root) => {
     root.setAttribute('class', classes.root);
+  },
+  config: {
+    duration: 3000,
   },
 });
 
