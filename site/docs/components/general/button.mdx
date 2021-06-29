@@ -1,0 +1,258 @@
+---
+sidebar_label: 'Button'
+sidebar_position: 1
+---
+import { Button, Icon } from '@mezzanine-ui/react';
+import { SearchIcon } from '@mezzanine-ui/icons';
+import Grid from '../../../src/components/document/Grid.tsx';
+
+# Button
+
+Buttons allow users to take actions, and make choices, with a single tap.
+
+## Examples
+
+### Basic Usage
+
+When you import `<Button>` from mezzanine-ui and render it, you will see:
+
+<Grid>
+  <Button>Default</Button>
+  <Button variant="contained">Contained</Button>
+</Grid>
+
+```jsx
+<Button>Default</Button>
+<Button variant="contained">Contained</Button>
+```
+
+### Contained Buttons
+
+Contained buttons are high-emphasis, distinguished by their use of elevation and fill.
+They contain actions that are primary to your app.
+
+<Grid>
+  <Button variant="contained" color="primary">Primary</Button>
+  <Button variant="contained" color="secondary">Secondary</Button>
+  <Button variant="contained" danger>Danger</Button>
+  <Button variant="contained" disabled>Disabled</Button>
+</Grid>
+
+
+```jsx
+<Button variant="contained" color="primary">Primary</Button>
+<Button variant="contained" color="secondary">Secondary</Button>
+<Button variant="contained" danger>Danger</Button>
+<Button variant="contained" disabled>Disabled</Button>
+```
+
+### Text Buttons
+
+Text buttons are typically used for less-pronounced actions.
+
+<Grid>
+  <Button color="primary">Primary</Button>
+  <Button color="secondary">Secondary</Button>
+  <Button danger>Danger</Button>
+  <Button disabled>Disabled</Button>
+</Grid>
+
+
+```jsx
+<Button color="primary">Primary</Button>
+<Button color="secondary">Secondary</Button>
+<Button danger>Danger</Button>
+<Button disabled>Disabled</Button>
+```
+
+### Outlined Buttons
+
+Outlined buttons are medium-emphasis buttons. They contain actions that are important, but aren't the primary action in an app.<br /><br/>
+Outlined buttons are also a lower emphasis alternative to contained buttons, or a high emphasis alternative to text buttons.
+
+<Grid>
+  <Button variant="outlined" color="primary">Primary</Button>
+  <Button variant="outlined" color="secondary">Secondary</Button>
+  <Button variant="outlined" danger>Danger</Button>
+  <Button variant="outlined" disabled>Disabled</Button>
+</Grid>
+
+
+```jsx
+<Button variant="outlined" color="primary">Primary</Button>
+<Button variant="outlined" color="secondary">Secondary</Button>
+<Button variant="outlined" danger>Danger</Button>
+<Button variant="outlined" disabled>Disabled</Button>
+```
+
+### Sizes
+
+If you want to customize button size, we recommend using `size` prop.
+
+<Grid>
+  <Button size="large">Large</Button>
+  <Button size="medium">Medium</Button>
+  <Button size="small">Small</Button>
+</Grid>
+<Grid>
+  <Button variant="outlined" size="large">Large</Button>
+  <Button variant="outlined" size="medium">Medium</Button>
+  <Button variant="outlined" size="small">Small</Button>
+</Grid>
+<Grid>
+  <Button variant="contained" size="large">Large</Button>
+  <Button variant="contained" size="medium">Medium</Button>
+  <Button variant="contained" size="small">Small</Button>
+</Grid>
+
+
+```jsx
+<Button size="large">Large</Button>
+<Button size="medium">Medium</Button>
+<Button size="small">Small</Button>
+<Button variant="outlined" size="large">Large</Button>
+<Button variant="outlined" size="medium">Medium</Button>
+<Button variant="outlined" size="small">Small</Button>
+<Button variant="contained" size="large">Large</Button>
+<Button variant="contained" size="medium">Medium</Button>
+<Button variant="contained" size="small">Small</Button>
+```
+
+### Handling Actions
+
+All the `<button>` element events are extended, so you can use any of them as you want.
+
+<Grid>
+  <Button
+    variant="contained"
+    onClick={() => alert('Click!')}
+    onMouseEnter={() => console.log('mouse enter')}
+    onMouseLeave={() => console.log('mouse blur!')}
+  >
+    Interact
+  </Button>
+</Grid>
+
+
+```jsx
+<Button
+  variant="contained"
+  onClick={() => alert('Click!')}
+  onMouseEnter={() => console.log('mouse enter')}
+  onMouseLeave={() => console.log('mouse blur!')}
+>
+  Interact
+</Button>
+```
+
+### Prefix & Suffix
+
+Sometimes you might want to have icons (or some decorators) for certain button
+to enhance the UX of the application as we recognize logos more easily than plain text.
+For example, if you have a search button you can add prefix with a search icon.
+
+<Grid>
+  <Button
+    variant="contained"
+    prefix={<Icon icon={SearchIcon} />}
+  >
+    Search
+  </Button>
+  <Button
+    variant="contained"
+    suffix={<Icon icon={SearchIcon} />}
+  >
+    Search
+  </Button>
+  <Button
+    variant="contained"
+    prefix={(() => '*')()}
+    suffix={(() => '*')()}
+  >
+    Search
+  </Button>
+</Grid>
+
+```jsx
+<Button
+  variant="contained"
+  prefix={<Icon icon={SearchIcon} />}
+>
+  Search
+</Button>
+<Button
+  variant="contained"
+  suffix={<Icon icon={SearchIcon} />}
+>
+  Search
+</Button>
+<Button
+  variant="contained"
+  prefix={(() => '*')()}
+  suffix={(() => '*')()}
+>
+  Search
+</Button>
+```
+
+### Loading
+
+Sometimes you need to call some asynchronous function, such as request an api and waiting for response,
+you might want to show an loading spinner on your button and disabled any user actions during this moment.
+
+<Grid>
+  <Button loading variant="contained">
+    Loading
+  </Button>
+  <Button loading>
+    Loading
+  </Button>
+</Grid>
+
+```jsx
+<Button loading variant="contained">
+  Loading
+</Button>
+<Button loading>
+  Loading
+</Button>
+```
+
+## How To Customize
+
+### Overrides css variables
+
+- You can overrides from system level. [Override from system](/docs/getting-started/how-to-customize)
+- Or overrides from component level.
+
+Variable Name | Default Value
+---|---
+--mzn-button-color|(Primary) `var(--mzn-color-on-primary)`<br/>(Secondary) `var(--mzn-color-on-secondary)`<br/>(Danger) `var(--mzn-color-on-error)`
+--mzn-button-bg|(Primary) `var(--mzn-color-primary)`<br/>(Secondary) `var(--mzn-color-secondary)`<br/>(Danger) `var(--mzn-color-error)`
+--mzn-button-hover-bg|(Primary) `var(--mzn-color-primary-light)`<br/>(Secondary) `var(--mzn-color-secondary-light)`<br/>(Danger) `var(--mzn-color-error-light)`
+--mzn-button-active-bg|(Primary) `var(--mzn-color-primary-dark)`<br/>(Secondary) `var(--mzn-color-secondary-dark)`<br/>(Danger) `var(--mzn-color-error-dark)`
+
+Example:
+
+```jsx
+<Button variant="contained" style={{ '--mzn-button-color': '#000' }}>
+  Custom
+</Button>
+```
+
+This code will result in:
+<Button variant="contained" style={{ '--mzn-button-color': '#000' }}>
+  Custom
+</Button>
+
+### Overrides via className & style
+
+```jsx
+<Button className="foo" style={{ backgroundColor: 'red' }}>
+  Custom
+</Button>
+```
+
+## API
+
+For more props detail, see [ButtonPropsBase](/docs/react-api/interfaces/buttonpropsbase), [ButtonProps](/docs/react-api/modules#buttonprops).

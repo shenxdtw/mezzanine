@@ -8,3 +8,5 @@
 **/*.tsx
 **/*.css
 **/*.scss
+site/docs/**
+site/blog/**

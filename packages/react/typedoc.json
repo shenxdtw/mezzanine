@@ -1,0 +1,15 @@
+{
+  "entryPoints": ["./src/index.ts"],
+  "sort": ["required-first", "alphabetical"],
+  "tsconfig": "tsconfig.doc.json",
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.spec.tsx",
+    "**/*.spec.ts",
+    "**/*.stories.tsx",
+    "**/*.stories.mdx"
+  ],
+  "excludeExternals": true,
+  "includeVersion": true,
+  "out": "../../site/docs/react-api"
+}

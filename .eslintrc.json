@@ -167,7 +167,8 @@
               "./",
               "./packages/core",
               "./packages/ng",
-              "./packages/react"
+              "./packages/react",
+              "./site"
             ]
           }
         ],

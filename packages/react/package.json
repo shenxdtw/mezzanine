@@ -23,7 +23,8 @@
     "build:clean": "node ../../scripts/cleanBuild.js",
     "build-storybook": "build-storybook",
     "storybook": "start-storybook -p 6006",
-    "deploy-storybook": "npx chromatic --project-token 894b8320410f"
+    "deploy-storybook": "npx chromatic --project-token 894b8320410f",
+    "doc:gen": "typedoc"
   },
   "peerDependencies": {
     "lodash": "^4.17.21",

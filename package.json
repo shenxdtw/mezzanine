@@ -49,7 +49,8 @@
     "react:test:coverage": "yarn react:test --coverage",
     "react:build": "yarn workspace @mezzanine-ui/react build",
     "react:build:all": "yarn build:base --scope @mezzanine-ui/react",
-    "react:storybook": "yarn workspace @mezzanine-ui/react storybook"
+    "react:storybook": "yarn workspace @mezzanine-ui/react storybook",
+    "react:doc:gen": "yarn workspace @mezzanine-ui/react doc:gen"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
@@ -98,6 +99,8 @@
     "stylelint-scss": "^3.19.0",
     "ts-jest": "^26.5.4",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "typedoc": "^0.21.2",
+    "typedoc-plugin-markdown": "^3.10.2",
     "typescript": "^4.1.5"
   },
   "resolutions": {
