@@ -18,7 +18,7 @@ function HomepageHeader() {
         <div className={classes.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro"
+            to="/docs/getting-started/installation"
           >
             Mezzanine Tutorial - 5min ⏱️
           </Link>

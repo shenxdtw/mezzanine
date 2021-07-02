@@ -1,0 +1,263 @@
+---
+sidebar_label: 'Input'
+sidebar_position: 2
+---
+import { useState } from 'react';
+import { Input, FormField, Icon } from '@mezzanine-ui/react';
+import { SearchIcon } from '@mezzanine-ui/icons';
+import Grid from '../../../src/components/document/Grid.tsx';
+import ControlledInput from '../../../src/components/document/Input/ControlledInput.tsx';
+
+# Input
+
+Input let users enter and edit text.
+
+## Examples
+
+### Basic Usage
+
+When you import `<Input />` from mezzanine-ui, you will see:
+
+<Grid>
+  <Input />
+  <Input placeholder="Type something..." />
+</Grid>
+
+```jsx
+<Input />
+<Input placeholder="Type something..." />
+```
+
+### Sizes
+
+If you want to customize input size, we recommend using `size` prop.
+
+<Grid>
+  <Input size="small" placeholder="small" />
+  <Input size="medium" placeholder="medium" />
+  <Input size="large" placeholder="large" />
+</Grid>
+
+```jsx
+<Input size="small" />
+<Input size="medium" />
+<Input size="large" />
+```
+
+### Clearable Input
+
+In some cases, you might want to allow users to clear their typings via one button clicked instead of clicking backspace multiple times.
+
+<Grid>
+  <Input
+    clearable
+    defaultValue="Clear Me"
+    placeholder="clearable"
+  />
+</Grid>
+
+```jsx
+<Input
+  clearable
+  defaultValue="Clear Me"
+  placeholder="clearable"
+/>
+```
+
+### Controlled vs Uncontrolled
+
+The component can be controlled and uncontrolled.
+
+<Grid>
+  <ControlledInput />
+  <Input
+    defaultValue="Default Value"
+    placeholder="type something"
+  />
+</Grid>
+
+```jsx title="ControlledInput.tsx"
+const [value, setValue] = useState('Value');
+
+return (
+  <Input
+    value={value}
+    onChange={(e) => setValue(e.target.value)}
+    placeholder="type something"
+  />
+);
+```
+
+```jsx title="UncontrolledInput.tsx"
+<Input
+  defaultValue="Default Value"
+  placeholder="type something"
+/>
+```
+
+### Prefix & Suffix
+
+Sometimes you might want to have icons (or some decorators) for certain input
+to enhance the UX of the application as we recognize logos more easily than plain text.
+For example, if you have a search input you can add prefix with a search icon.
+
+<Grid>
+  <Input
+    placeholder="Search"
+    prefix={<Icon icon={SearchIcon} />}
+  />
+  <Input
+    placeholder="Search"
+    suffix={<Icon icon={SearchIcon} />}
+  />
+</Grid>
+
+```jsx
+<Input
+  placeholder="Search"
+  prefix={<Icon icon={SearchIcon} />}
+/>
+<Input
+  placeholder="Search"
+  suffix={<Icon icon={SearchIcon} />}
+/>
+```
+
+Also, you can render any decorator in prefix/suffix, but you need positioning your decorator by your own.<br/>
+For example, if you use `medium` size input, then your decorator should remain `height: 24px` or `line-height: 24px`, which is equal to `<Icon />` height, so decorator could be centerized.
+
+<Grid>
+  <Input
+    placeholder="0"
+    prefix={(() => (
+      <div style={{ fontSize: '15px', lineHeight: '24px' }}>
+        $
+      </div>
+    ))()}
+  />
+  <Input
+    placeholder="0"
+    suffix={(() => (
+      <div style={{ fontSize: '15px', lineHeight: '24px' }}>
+        NT
+      </div>
+    ))()}
+  />
+</Grid>
+
+```jsx
+<Input
+  placeholder="0"
+  prefix={(() => (
+    <div style={{ fontSize: '15px', lineHeight: '24px' }}>
+      $
+    </div>
+  ))()}
+/>
+<Input
+  placeholder="0"
+  suffix={(() => (
+    <div style={{ fontSize: '15px', lineHeight: '24px' }}>
+      NT
+    </div>
+  ))()}
+/>
+```
+
+### Form States
+
+When user is typing, input state might changed several times due to your custom validation.
+`<Input />` allows you to change different state via props such as `disabled`, `error`, `readonly`.
+
+<Grid>
+  <Input disabled placeholder="disabled" />
+  <Input error placeholder="error" />
+  <Input readOnly placeholder="readonly" />
+</Grid>
+
+```jsx
+<Input disabled placeholder="disabled" />
+<Input error placeholder="error" />
+<Input readOnly placeholder="readonly" />
+```
+
+### Integrate With FormField
+
+In most use cases, you will need to implement `<Input />` with some form controller (such redux-form, formik, react-final-form...etc).<br />
+You can wrap `<Input />` under `<FormField />` which is also export from `@mezzanine-ui/react` to control form element states at once.
+
+Note: To see how `<FormField />` works, see [FormField](/docs/components/data-entry/form-field)
+
+<Grid>
+  <FormField required style={{ marginBottom: '0' }}>
+    <Input placeholder="Required" />
+  </FormField>
+  <FormField severity="error" style={{ marginBottom: '0' }}>
+    <Input placeholder="Error" />
+  </FormField>
+  <FormField disabled style={{ marginBottom: '0' }}>
+    <Input placeholder="Disabled" />
+  </FormField>
+</Grid>
+
+```jsx
+<FormField required>
+  <Input placeholder="Required" />
+</FormField>
+<FormField severity="error">
+  <Input placeholder="Error" />
+</FormField>
+<FormField disabled>
+  <Input placeholder="Disabled" />
+</FormField>
+```
+
+###
+
+## How To Customize
+
+### Overrides css variables
+
+- You can overrides from system level. [Override from system](/docs/getting-started/how-to-customize)
+- Or overrides from component level.
+
+Variable Name | Default Value
+---|---
+--mzn-text-field-height|(large)`var(--mzn-typography-input1-line-height)`<br />(medium)`var(--mzn-typography-input2-line-height)`<br />(small)`var(--mzn-typography-input3-line-height)`
+--mzn-text-field-padding-x|(medium & large)`16px`<br />(small)`12px`
+--mzn-text-field-icon-size|(medium & large)`1.5rem`<br />(small)`1rem`
+--mzn-text-field-padding-x-prefix|`calc(var(--mzn-text-field-padding-x) + var(--mzn-text-field-icon-size))`
+--mzn-text-field-padding-left|`var(--mzn-text-field-padding-x)`
+--mzn-text-field-padding-right|`var(--mzn-text-field-padding-x)`
+--mzn-text-field-prefix-x-gap|`calc(var(--mzn-text-field-padding-x) - 4px)`
+--mzn-text-field-status-color|(default)`undefined`<br />(severity: error)`var(--mzn-color-error)`<br />(focus)`var(--mzn-color-primary)`
+--mzn-text-field-interact-icon-color|`var(--mzn-form-field-severity-color, var(--mzn-text-field-status-color))`
+
+
+### Overrides via className / inputProps
+
+<Grid>
+  <Input
+    className="foo"
+    inputProps={{
+      style: {
+        textAlign: 'center',
+      },
+    }}
+  />
+</Grid>
+
+```jsx
+<Input
+  className="foo"
+  inputProps={{
+    style: {
+      textAlign: 'center',
+    },
+  }}
+/>
+```
+
+## API
+
+For more props detail, see [InputProps](/docs/react-api/interfaces/inputProps).
