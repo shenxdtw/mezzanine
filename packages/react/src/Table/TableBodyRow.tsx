@@ -119,9 +119,17 @@ const TableBodyRow = forwardRef<HTMLDivElement, TableBodyRowProps>(
             />
           ) : null}
           {(columns ?? []).map((column: TableColumn<TableRecord<unknown>>, index: number) => {
-            const ellipsis = !!(rowData[column.dataIndex]) && (column.ellipsis ?? true);
+            const ellipsis = (column.ellipsis ?? true);
+            const content = column.render?.(
+              rowData,
+              column,
+              index,
+            ) || (
+              rowData[column.dataIndex || '']
+            );
+
             const tooltipTitle = (
-              column.renderTooltipTitle?.(rowData) ?? rowData[column.dataIndex]
+              column.renderTooltipTitle?.(rowData) ?? content
             ) as (string | number);
 
             return (
@@ -143,11 +151,7 @@ const TableBodyRow = forwardRef<HTMLDivElement, TableBodyRowProps>(
                     style={getCellStyle(column)}
                     tooltipTitle={tooltipTitle}
                   >
-                    {column.render?.(
-                      column,
-                      rowData,
-                      index,
-                    ) || rowData[column.dataIndex]}
+                    {content}
                   </TableCell>
                 </TableEditRenderWrapper>
               </div>

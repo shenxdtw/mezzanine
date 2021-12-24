@@ -37,11 +37,8 @@ export interface TableDataSourceWithID extends TableRecord<unknown> {
 
 export type TableDataSource = TableDataSourceWithKey | TableDataSourceWithID;
 
-export type TableColumn<SourceType> = {
-  dataIndex: string;
-  title?: string;
-  render?(column: TableColumn<SourceType>, source: SourceType, index: number): any;
-  renderTitle?(classes: typeof tableClasses): any;
+type TableColumnBase<SourceType> = {
+  key: string;
   renderTooltipTitle?(source: SourceType): string;
   // == Custom column style ==
   align?: 'start' | 'center' | 'end';
@@ -60,6 +57,35 @@ export type TableColumn<SourceType> = {
   /** force display tooltip whenever content is hovered */
   forceShownTooltipWhenHovered?: boolean;
 };
+
+type TableColumnTitle<SourceType> = TableColumnBase<SourceType> & {
+  title: string;
+  renderTitle?: undefined;
+};
+type TableColumnRenderTitle<SourceType> = TableColumnBase<SourceType> & {
+  title?: undefined;
+  renderTitle(classes: typeof tableClasses): any;
+};
+type TableColumnDataIndex<SourceType> = TableColumnBase<SourceType> & {
+  dataIndex: string;
+  render?: undefined;
+};
+type TableColumnRender<SourceType> = TableColumnBase<SourceType> & {
+  dataIndex?: undefined;
+  render(source: SourceType, column: TableColumn<SourceType>, index: number): any;
+};
+
+type TableColumnType1<SourceType> = TableColumnTitle<SourceType> & TableColumnDataIndex<SourceType>;
+type TableColumnType2<SourceType> = TableColumnTitle<SourceType> & TableColumnRender<SourceType>;
+type TableColumnType3<SourceType> = TableColumnRenderTitle<SourceType> & TableColumnDataIndex<SourceType>;
+type TableColumnType4<SourceType> = TableColumnRenderTitle<SourceType> & TableColumnRender<SourceType>;
+
+export type TableColumn<SourceType> = (
+  TableColumnType1<SourceType>
+  | TableColumnType2<SourceType>
+  | TableColumnType3<SourceType>
+  | TableColumnType4<SourceType>
+);
 
 export type TableFetchMore = {
   callback?(): any;
